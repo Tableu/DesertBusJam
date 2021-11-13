@@ -8,7 +8,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 	[GeneratedInterpol("{\"inter\":[0.15,0.15,0]")]
 	public partial class PlayerNetworkObject : NetworkObject
 	{
-		public const int IDENTITY = 8;
+		public const int IDENTITY = 7;
 
 		private byte[] _dirtyFields = new byte[1];
 
@@ -16,10 +16,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 		public event FieldChangedEvent fieldAltered;
 		#pragma warning restore 0067
 		[ForgeGeneratedField]
-		private Vector2 _position;
-		public event FieldEvent<Vector2> positionChanged;
-		public InterpolateVector2 positionInterpolation = new InterpolateVector2() { LerpT = 0.15f, Enabled = true };
-		public Vector2 position
+		private Vector3 _position;
+		public event FieldEvent<Vector3> positionChanged;
+		public InterpolateVector3 positionInterpolation = new InterpolateVector3() { LerpT = 0.15f, Enabled = true };
+		public Vector3 position
 		{
 			get { return _position; }
 			set
@@ -135,7 +135,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		protected override void ReadPayload(BMSByte payload, ulong timestep)
 		{
-			_position = UnityObjectMapper.Instance.Map<Vector2>(payload);
+			_position = UnityObjectMapper.Instance.Map<Vector3>(payload);
 			positionInterpolation.current = _position;
 			positionInterpolation.target = _position;
 			RunChange_position(timestep);
@@ -180,12 +180,12 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			{
 				if (positionInterpolation.Enabled)
 				{
-					positionInterpolation.target = UnityObjectMapper.Instance.Map<Vector2>(data);
+					positionInterpolation.target = UnityObjectMapper.Instance.Map<Vector3>(data);
 					positionInterpolation.Timestep = timestep;
 				}
 				else
 				{
-					_position = UnityObjectMapper.Instance.Map<Vector2>(data);
+					_position = UnityObjectMapper.Instance.Map<Vector3>(data);
 					RunChange_position(timestep);
 				}
 			}
@@ -224,7 +224,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 			if (positionInterpolation.Enabled && !positionInterpolation.current.UnityNear(positionInterpolation.target, 0.0015f))
 			{
-				_position = (Vector2)positionInterpolation.Interpolate();
+				_position = (Vector3)positionInterpolation.Interpolate();
 				//RunChange_position(positionInterpolation.Timestep);
 			}
 			if (rotationInterpolation.Enabled && !rotationInterpolation.current.UnityNear(rotationInterpolation.target, 0.0015f))

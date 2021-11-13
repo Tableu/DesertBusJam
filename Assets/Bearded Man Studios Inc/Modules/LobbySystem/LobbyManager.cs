@@ -136,6 +136,8 @@ namespace BeardedManStudios.Forge.Networking.Unity.Lobby
 
         public void StartGame(int sceneID)
         {
+	        if (!LobbyService.Instance.IsServer)
+		        return;
 #if UNITY_5_6_OR_NEWER
             SceneManager.LoadScene(sceneID);
 #else
