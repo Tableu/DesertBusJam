@@ -4,10 +4,12 @@ using UnityEngine;
 public class Player : PlayerBehavior
 {
     public float speed = 5.0f;
+
+    private MinigameManager _minigameManager;
     // Start is called before the first frame update
     void Start()
     {
-        
+        _minigameManager = GameObject.Find("MinigameManager").GetComponent<MinigameManager>();
     }
 
     // Update is called once per frame

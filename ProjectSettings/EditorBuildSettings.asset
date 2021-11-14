@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Bearded Man Studios Inc/Scenes/Lobby.unity
     guid: d6a4ccf71fa1c1240a407fe67e79438e
   - enabled: 1
-    path: Assets/Scenes/MinigameScene.unity
+    path: Assets/Scenes/TugOfWar.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
