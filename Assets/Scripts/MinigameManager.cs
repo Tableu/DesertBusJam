@@ -35,4 +35,19 @@ public class MinigameManager : MinigameManagerBehavior
     {
         
     }
+
+    private void OnDestroy()
+    {
+        _instance = null;
+    }
+
+    public void Win()
+    {
+        
+    }
+
+    public void Lose()
+    {
+        
+    }
 }

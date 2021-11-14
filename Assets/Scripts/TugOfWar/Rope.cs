@@ -33,15 +33,25 @@ public class Rope : RopeBehavior
                 player.score = 0;
                 player.networkObject.score = 0;
             }
-
-            if (totalScore > scoreGoal)
+            
+            if (totalScore > scoreGoal*MinigameManager.Instance.players.Count)
             {
                 var pos = transform.position;
                 transform.position = pos + new Vector3(-1, 0, 0);
-            }else if (totalScore <= scoreGoal)
+            }else if (totalScore <= scoreGoal*MinigameManager.Instance.players.Count)
             {
                 var pos = transform.position;
                 transform.position = pos + new Vector3(1, 0, 0);
+            }
+
+            if (transform.position.x > 5)
+            {
+                MinigameManager.Instance.Lose();
+                Time.timeScale = 0;
+            }else if (transform.position.x < -5)
+            {
+                MinigameManager.Instance.Win();
+                Time.timeScale = 0;
             }
         }
         networkObject.position = transform.position;
