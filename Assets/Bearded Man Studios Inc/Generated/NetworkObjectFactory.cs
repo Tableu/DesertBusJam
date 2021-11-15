@@ -35,6 +35,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 						availableCallback = true;
 						obj = new ExampleProximityPlayerNetworkObject(networker, id, frame);
 						break;
+					case MapNetworkObject.IDENTITY:
+						availableCallback = true;
+						obj = new MapNetworkObject(networker, id, frame);
+						break;
 					case MinigameManagerNetworkObject.IDENTITY:
 						availableCallback = true;
 						obj = new MinigameManagerNetworkObject(networker, id, frame);
@@ -54,10 +58,6 @@ namespace BeardedManStudios.Forge.Networking.Generated
 					case TestNetworkObject.IDENTITY:
 						availableCallback = true;
 						obj = new TestNetworkObject(networker, id, frame);
-						break;
-					case MapNetworkObject.IDENTITY:
-						availableCallback = true;
-						obj = new MapNetworkObject(networker, id, frame);
 						break;
 				}
 

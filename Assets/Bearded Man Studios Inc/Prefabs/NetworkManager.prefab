@@ -48,9 +48,12 @@ MonoBehaviour:
   CubeForgeGameNetworkObject: []
   ExampleProximityPlayerNetworkObject:
   - {fileID: 1000012738253334, guid: feb25ecf90a8d8b4ab922a455249997b, type: 3}
+  MinigameManagerNetworkObject: []
   NetworkCameraNetworkObject:
   - {fileID: 139536, guid: 661f29f0c0c86fa47b6015bd602d0ac6, type: 3}
   PlayerNetworkObject:
-  - {fileID: 9101071675814791301, guid: 8fa4886eb2d132b409e8a8bd34cf7cba, type: 3}
+  - {fileID: 1463947980011654271, guid: 6bd7115b7d8e510498ae3f71034a73d5, type: 3}
+  RopeNetworkObject: []
   TestNetworkObject: []
+  MapNetworkObject: []
   automaticScenes: 1

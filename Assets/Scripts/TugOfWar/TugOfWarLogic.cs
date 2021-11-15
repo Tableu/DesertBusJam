@@ -17,6 +17,7 @@ public class TugOfWarLogic : RopeBehavior
     {
         if (networkObject == null)
             return;
+
         if (!networkObject.IsOwner)
         {
             transform.position = networkObject.position;

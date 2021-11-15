@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
 using BeardedManStudios.Forge.Networking.Generated;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -32,6 +29,7 @@ public class MapManager : MapBehavior
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += DisableCanvas;
         points = 0;
     }
     
@@ -59,15 +57,21 @@ public class MapManager : MapBehavior
 
     public void LoadMinigame()
     {
-        canvas.SetActive(false);
         if (networkObject.IsServer)
         {
             SceneManager.LoadScene("Scenes/TugOfWar");
         }
     }
 
-    public void LoadMap()
+    public void DisableCanvas(Scene scene, LoadSceneMode mode)
     {
-        canvas.SetActive(true);
+        if (scene.name.Equals("MapScene"))
+        {
+            canvas.SetActive(true);
+        }
+        else
+        {
+            canvas.SetActive(false);
+        }
     }
 }

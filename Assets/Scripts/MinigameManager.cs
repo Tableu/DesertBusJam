@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using BeardedManStudios.Forge.Networking;
 using BeardedManStudios.Forge.Networking.Generated;
 using BeardedManStudios.Forge.Networking.Unity;
 using UnityEngine;
@@ -51,7 +50,6 @@ public class MinigameManager : MinigameManagerBehavior
         if (networkObject.IsServer)
         {
             SceneManager.LoadScene("Scenes/MapScene", LoadSceneMode.Single);
-            MapManager.Instance.LoadMap();
         }
     }
 
@@ -60,7 +58,6 @@ public class MinigameManager : MinigameManagerBehavior
         if (networkObject.IsServer)
         {
             SceneManager.LoadScene("Scenes/MapScene", LoadSceneMode.Single);
-            MapManager.Instance.LoadMap();
         }
     }
 }

@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedInterpol("{\"inter\":[0.15,0.15,0]")]
+	[GeneratedInterpol("{\"inter\":[0.15,0.15,0,0,0]")]
 	public partial class PlayerNetworkObject : NetworkObject
 	{
-		public const int IDENTITY = 6;
+		public const int IDENTITY = 10;
 
 		private byte[] _dirtyFields = new byte[1];
 
@@ -108,6 +108,68 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			if (scoreChanged != null) scoreChanged(_score, timestep);
 			if (fieldAltered != null) fieldAltered("score", _score, timestep);
 		}
+		[ForgeGeneratedField]
+		private int _spriteIndex;
+		public event FieldEvent<int> spriteIndexChanged;
+		public Interpolated<int> spriteIndexInterpolation = new Interpolated<int>() { LerpT = 0f, Enabled = false };
+		public int spriteIndex
+		{
+			get { return _spriteIndex; }
+			set
+			{
+				// Don't do anything if the value is the same
+				if (_spriteIndex == value)
+					return;
+
+				// Mark the field as dirty for the network to transmit
+				_dirtyFields[0] |= 0x8;
+				_spriteIndex = value;
+				hasDirtyFields = true;
+			}
+		}
+
+		public void SetspriteIndexDirty()
+		{
+			_dirtyFields[0] |= 0x8;
+			hasDirtyFields = true;
+		}
+
+		private void RunChange_spriteIndex(ulong timestep)
+		{
+			if (spriteIndexChanged != null) spriteIndexChanged(_spriteIndex, timestep);
+			if (fieldAltered != null) fieldAltered("spriteIndex", _spriteIndex, timestep);
+		}
+		[ForgeGeneratedField]
+		private int _sortingOrder;
+		public event FieldEvent<int> sortingOrderChanged;
+		public Interpolated<int> sortingOrderInterpolation = new Interpolated<int>() { LerpT = 0f, Enabled = false };
+		public int sortingOrder
+		{
+			get { return _sortingOrder; }
+			set
+			{
+				// Don't do anything if the value is the same
+				if (_sortingOrder == value)
+					return;
+
+				// Mark the field as dirty for the network to transmit
+				_dirtyFields[0] |= 0x10;
+				_sortingOrder = value;
+				hasDirtyFields = true;
+			}
+		}
+
+		public void SetsortingOrderDirty()
+		{
+			_dirtyFields[0] |= 0x10;
+			hasDirtyFields = true;
+		}
+
+		private void RunChange_sortingOrder(ulong timestep)
+		{
+			if (sortingOrderChanged != null) sortingOrderChanged(_sortingOrder, timestep);
+			if (fieldAltered != null) fieldAltered("sortingOrder", _sortingOrder, timestep);
+		}
 
 		protected override void OwnershipChanged()
 		{
@@ -120,6 +182,8 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			positionInterpolation.current = positionInterpolation.target;
 			rotationInterpolation.current = rotationInterpolation.target;
 			scoreInterpolation.current = scoreInterpolation.target;
+			spriteIndexInterpolation.current = spriteIndexInterpolation.target;
+			sortingOrderInterpolation.current = sortingOrderInterpolation.target;
 		}
 
 		public override int UniqueIdentity { get { return IDENTITY; } }
@@ -129,6 +193,8 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			UnityObjectMapper.Instance.MapBytes(data, _position);
 			UnityObjectMapper.Instance.MapBytes(data, _rotation);
 			UnityObjectMapper.Instance.MapBytes(data, _score);
+			UnityObjectMapper.Instance.MapBytes(data, _spriteIndex);
+			UnityObjectMapper.Instance.MapBytes(data, _sortingOrder);
 
 			return data;
 		}
@@ -147,6 +213,14 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			scoreInterpolation.current = _score;
 			scoreInterpolation.target = _score;
 			RunChange_score(timestep);
+			_spriteIndex = UnityObjectMapper.Instance.Map<int>(payload);
+			spriteIndexInterpolation.current = _spriteIndex;
+			spriteIndexInterpolation.target = _spriteIndex;
+			RunChange_spriteIndex(timestep);
+			_sortingOrder = UnityObjectMapper.Instance.Map<int>(payload);
+			sortingOrderInterpolation.current = _sortingOrder;
+			sortingOrderInterpolation.target = _sortingOrder;
+			RunChange_sortingOrder(timestep);
 		}
 
 		protected override BMSByte SerializeDirtyFields()
@@ -160,6 +234,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _rotation);
 			if ((0x4 & _dirtyFields[0]) != 0)
 				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _score);
+			if ((0x8 & _dirtyFields[0]) != 0)
+				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _spriteIndex);
+			if ((0x10 & _dirtyFields[0]) != 0)
+				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _sortingOrder);
 
 			// Reset all the dirty fields
 			for (int i = 0; i < _dirtyFields.Length; i++)
@@ -215,6 +293,32 @@ namespace BeardedManStudios.Forge.Networking.Generated
 					RunChange_score(timestep);
 				}
 			}
+			if ((0x8 & readDirtyFlags[0]) != 0)
+			{
+				if (spriteIndexInterpolation.Enabled)
+				{
+					spriteIndexInterpolation.target = UnityObjectMapper.Instance.Map<int>(data);
+					spriteIndexInterpolation.Timestep = timestep;
+				}
+				else
+				{
+					_spriteIndex = UnityObjectMapper.Instance.Map<int>(data);
+					RunChange_spriteIndex(timestep);
+				}
+			}
+			if ((0x10 & readDirtyFlags[0]) != 0)
+			{
+				if (sortingOrderInterpolation.Enabled)
+				{
+					sortingOrderInterpolation.target = UnityObjectMapper.Instance.Map<int>(data);
+					sortingOrderInterpolation.Timestep = timestep;
+				}
+				else
+				{
+					_sortingOrder = UnityObjectMapper.Instance.Map<int>(data);
+					RunChange_sortingOrder(timestep);
+				}
+			}
 		}
 
 		public override void InterpolateUpdate()
@@ -236,6 +340,16 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			{
 				_score = (int)scoreInterpolation.Interpolate();
 				//RunChange_score(scoreInterpolation.Timestep);
+			}
+			if (spriteIndexInterpolation.Enabled && !spriteIndexInterpolation.current.UnityNear(spriteIndexInterpolation.target, 0.0015f))
+			{
+				_spriteIndex = (int)spriteIndexInterpolation.Interpolate();
+				//RunChange_spriteIndex(spriteIndexInterpolation.Timestep);
+			}
+			if (sortingOrderInterpolation.Enabled && !sortingOrderInterpolation.current.UnityNear(sortingOrderInterpolation.target, 0.0015f))
+			{
+				_sortingOrder = (int)sortingOrderInterpolation.Interpolate();
+				//RunChange_sortingOrder(sortingOrderInterpolation.Timestep);
 			}
 		}
 
