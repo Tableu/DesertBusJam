@@ -1,7 +1,7 @@
 using BeardedManStudios.Forge.Networking.Generated;
 using UnityEngine;
 
-public class Rope : RopeBehavior
+public class TugOfWarLogic : RopeBehavior
 {
     public int timerLength;
     public int scoreGoal;
@@ -50,10 +50,16 @@ public class Rope : RopeBehavior
                 Time.timeScale = 0;
             }else if (transform.position.x < -5)
             {
-                MinigameManager.Instance.Win();
+                MinigameManager.Instance.Win(400);
                 Time.timeScale = 0;
             }
         }
         networkObject.position = transform.position;
+    }
+
+    private void SetDifficulty()
+    {
+        timerLength = 0;
+        scoreGoal = 0;
     }
 }

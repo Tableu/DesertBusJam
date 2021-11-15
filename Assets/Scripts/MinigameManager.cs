@@ -1,8 +1,9 @@
-using System;
 using System.Collections.Generic;
+using BeardedManStudios.Forge.Networking;
 using BeardedManStudios.Forge.Networking.Generated;
 using BeardedManStudios.Forge.Networking.Unity;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MinigameManager : MinigameManagerBehavior
 {
@@ -21,6 +22,8 @@ public class MinigameManager : MinigameManagerBehavior
         if (Instance)
         {
             Destroy(gameObject);
+            Destroy(this);
+            return;
         }
         _instance = this;
     }
@@ -28,6 +31,7 @@ public class MinigameManager : MinigameManagerBehavior
     private void Start()
     {
         NetworkManager.Instance.InstantiatePlayer(playerPrefabIndex, startPos[(int)networkObject.MyPlayerId]);
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame
@@ -41,13 +45,22 @@ public class MinigameManager : MinigameManagerBehavior
         _instance = null;
     }
 
-    public void Win()
+    public void Win(int points)
     {
-        
+        MapManager.Instance.AddPoints(points);
+        if (networkObject.IsServer)
+        {
+            SceneManager.LoadScene("Scenes/MapScene", LoadSceneMode.Single);
+            MapManager.Instance.LoadMap();
+        }
     }
 
     public void Lose()
     {
-        
+        if (networkObject.IsServer)
+        {
+            SceneManager.LoadScene("Scenes/MapScene", LoadSceneMode.Single);
+            MapManager.Instance.LoadMap();
+        }
     }
 }
