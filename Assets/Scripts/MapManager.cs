@@ -10,7 +10,9 @@ public class MapManager : MapBehavior
     [SerializeField] private Text moneyText;
     [SerializeField] private Slider slider;
     [SerializeField] private GameObject canvas;
+    private int _difficulty = 0;
     public int Points => points;
+    public int Difficulty => _difficulty;
     public static MapManager Instance
     {
         get { return _instance; }
@@ -53,6 +55,10 @@ public class MapManager : MapBehavior
         points += score;
         slider.value = points;
         moneyText.text = points.ToString();
+        if (points > 200)
+        {
+            _difficulty = 1;
+        }
     }
 
     public void LoadMinigame()

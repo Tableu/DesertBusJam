@@ -1,15 +1,31 @@
 using BeardedManStudios.Forge.Networking.Generated;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UI;
 
+[System.Serializable]
+public struct TugOfWarDifficulty
+{
+    public float timerLength;
+    public float keyTimerLength;
+    public int scoreGoal;
+}
 public class TugOfWarLogic : RopeBehavior
 {
-    public int timerLength;
+    public float timerLength;
+    public float keyTimerLength;
     public int scoreGoal;
-    private float timer;
+    public GameObject rope;
+    public TugOfWarDifficulty[] difficultyLevels;
+    private float _timer;
+    private float _keyTimer;
+    public Text[] mashKeysText;
     // Start is called before the first frame update
     void Start()
     {
-        timer = 0;
+        _timer = 0;
+        _keyTimer = 0;
+        SetDifficulty();
     }
 
     // Update is called once per frame
@@ -20,47 +36,62 @@ public class TugOfWarLogic : RopeBehavior
 
         if (!networkObject.IsOwner)
         {
-            transform.position = networkObject.position;
+            rope.transform.position = networkObject.position;
             return;
         }
-        timer += Time.fixedDeltaTime;
-        if (timer > timerLength)
+        _timer += Time.fixedDeltaTime;
+        _keyTimer += Time.fixedDeltaTime;
+        if (_timer > timerLength)
         {
-            timer = 0;
+            _timer = 0;
             int totalScore = 0;
+            
             foreach (TugOfWarPlayer player in MinigameManager.Instance.players)
             {
                 totalScore += player.networkObject.score;
                 player.score = 0;
                 player.networkObject.score = 0;
+                if (player.networkObject.IsOwner && _keyTimer > keyTimerLength)
+                {
+                    string[] mashKeys = player.RandomizeKeys();
+                    mashKeysText[0].text = mashKeys[0].ToUpper();
+                    mashKeysText[1].text = mashKeys[1].ToUpper();
+
+                    _keyTimer = 0;
+                }
             }
             
             if (totalScore > scoreGoal*MinigameManager.Instance.players.Count)
             {
-                var pos = transform.position;
-                transform.position = pos + new Vector3(-1, 0, 0);
+                var pos = rope.transform.position;
+                rope.transform.position = pos + new Vector3(-1, 0, 0);
             }else if (totalScore <= scoreGoal*MinigameManager.Instance.players.Count)
             {
-                var pos = transform.position;
-                transform.position = pos + new Vector3(1, 0, 0);
+                var pos = rope.transform.position;
+                rope.transform.position = pos + new Vector3(1, 0, 0);
             }
 
-            if (transform.position.x > 5)
+            if (rope.transform.position.x > 5)
             {
                 MinigameManager.Instance.Lose();
                 Time.timeScale = 0;
-            }else if (transform.position.x < -5)
+            }else if (rope.transform.position.x < -5)
             {
                 MinigameManager.Instance.Win(400);
                 Time.timeScale = 0;
             }
         }
-        networkObject.position = transform.position;
+        networkObject.position = rope.transform.position;
     }
 
     private void SetDifficulty()
     {
-        timerLength = 0;
-        scoreGoal = 0;
+        if (MapManager.Instance.Difficulty < difficultyLevels.Length)
+        {
+            TugOfWarDifficulty settings = difficultyLevels[MapManager.Instance.Difficulty];
+            timerLength = settings.timerLength;
+            keyTimerLength = settings.keyTimerLength;
+            scoreGoal = settings.scoreGoal;
+        }
     }
 }
