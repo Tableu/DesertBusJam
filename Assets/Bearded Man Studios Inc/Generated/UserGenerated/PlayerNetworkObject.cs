@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedInterpol("{\"inter\":[0.15,0.15,0,0,0]")]
+	[GeneratedInterpol("{\"inter\":[0.15,0.15,0,0,0,0]")]
 	public partial class PlayerNetworkObject : NetworkObject
 	{
 		public const int IDENTITY = 10;
@@ -170,6 +170,37 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			if (sortingOrderChanged != null) sortingOrderChanged(_sortingOrder, timestep);
 			if (fieldAltered != null) fieldAltered("sortingOrder", _sortingOrder, timestep);
 		}
+		[ForgeGeneratedField]
+		private int _playerCharacter;
+		public event FieldEvent<int> playerCharacterChanged;
+		public Interpolated<int> playerCharacterInterpolation = new Interpolated<int>() { LerpT = 0f, Enabled = false };
+		public int playerCharacter
+		{
+			get { return _playerCharacter; }
+			set
+			{
+				// Don't do anything if the value is the same
+				if (_playerCharacter == value)
+					return;
+
+				// Mark the field as dirty for the network to transmit
+				_dirtyFields[0] |= 0x20;
+				_playerCharacter = value;
+				hasDirtyFields = true;
+			}
+		}
+
+		public void SetplayerCharacterDirty()
+		{
+			_dirtyFields[0] |= 0x20;
+			hasDirtyFields = true;
+		}
+
+		private void RunChange_playerCharacter(ulong timestep)
+		{
+			if (playerCharacterChanged != null) playerCharacterChanged(_playerCharacter, timestep);
+			if (fieldAltered != null) fieldAltered("playerCharacter", _playerCharacter, timestep);
+		}
 
 		protected override void OwnershipChanged()
 		{
@@ -184,6 +215,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			scoreInterpolation.current = scoreInterpolation.target;
 			spriteIndexInterpolation.current = spriteIndexInterpolation.target;
 			sortingOrderInterpolation.current = sortingOrderInterpolation.target;
+			playerCharacterInterpolation.current = playerCharacterInterpolation.target;
 		}
 
 		public override int UniqueIdentity { get { return IDENTITY; } }
@@ -195,6 +227,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			UnityObjectMapper.Instance.MapBytes(data, _score);
 			UnityObjectMapper.Instance.MapBytes(data, _spriteIndex);
 			UnityObjectMapper.Instance.MapBytes(data, _sortingOrder);
+			UnityObjectMapper.Instance.MapBytes(data, _playerCharacter);
 
 			return data;
 		}
@@ -221,6 +254,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			sortingOrderInterpolation.current = _sortingOrder;
 			sortingOrderInterpolation.target = _sortingOrder;
 			RunChange_sortingOrder(timestep);
+			_playerCharacter = UnityObjectMapper.Instance.Map<int>(payload);
+			playerCharacterInterpolation.current = _playerCharacter;
+			playerCharacterInterpolation.target = _playerCharacter;
+			RunChange_playerCharacter(timestep);
 		}
 
 		protected override BMSByte SerializeDirtyFields()
@@ -238,6 +275,8 @@ namespace BeardedManStudios.Forge.Networking.Generated
 				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _spriteIndex);
 			if ((0x10 & _dirtyFields[0]) != 0)
 				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _sortingOrder);
+			if ((0x20 & _dirtyFields[0]) != 0)
+				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _playerCharacter);
 
 			// Reset all the dirty fields
 			for (int i = 0; i < _dirtyFields.Length; i++)
@@ -319,6 +358,19 @@ namespace BeardedManStudios.Forge.Networking.Generated
 					RunChange_sortingOrder(timestep);
 				}
 			}
+			if ((0x20 & readDirtyFlags[0]) != 0)
+			{
+				if (playerCharacterInterpolation.Enabled)
+				{
+					playerCharacterInterpolation.target = UnityObjectMapper.Instance.Map<int>(data);
+					playerCharacterInterpolation.Timestep = timestep;
+				}
+				else
+				{
+					_playerCharacter = UnityObjectMapper.Instance.Map<int>(data);
+					RunChange_playerCharacter(timestep);
+				}
+			}
 		}
 
 		public override void InterpolateUpdate()
@@ -350,6 +402,11 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			{
 				_sortingOrder = (int)sortingOrderInterpolation.Interpolate();
 				//RunChange_sortingOrder(sortingOrderInterpolation.Timestep);
+			}
+			if (playerCharacterInterpolation.Enabled && !playerCharacterInterpolation.current.UnityNear(playerCharacterInterpolation.target, 0.0015f))
+			{
+				_playerCharacter = (int)playerCharacterInterpolation.Interpolate();
+				//RunChange_playerCharacter(playerCharacterInterpolation.Timestep);
 			}
 		}
 

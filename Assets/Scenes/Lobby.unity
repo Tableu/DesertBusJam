@@ -205,12 +205,80 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: Characters.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
       propertyPath: TeamColors.Array.size
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
       propertyPath: AvatarColors.Array.size
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: Characters.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 2f3826ea26dbfa1419b62db45aaeb8ad, type: 3}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: Characters.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 05bbd7806d6654842adb1e3f3eb9c5ea, type: 3}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: Characters.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 93046524381c2e24787d086c33936c46, type: 3}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: Characters.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: ac141f8adb3606347ade25756621dddc, type: 3}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: AvatarColors.Array.data[0].b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: AvatarColors.Array.data[0].g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: AvatarColors.Array.data[0].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: AvatarColors.Array.data[1].b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: AvatarColors.Array.data[1].g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: AvatarColors.Array.data[1].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: AvatarColors.Array.data[2].b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: AvatarColors.Array.data[2].g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: AvatarColors.Array.data[2].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: AvatarColors.Array.data[3].b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: AvatarColors.Array.data[3].g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010729233930, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
+      propertyPath: AvatarColors.Array.data[3].r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224000010097552624, guid: 6071845147cf1b84aa8fc9a4494b0030, type: 3}
       propertyPath: m_AnchorMax.x

@@ -183,9 +183,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   spriteRenderer: {fileID: 1463947980011654268}
+  handRenderer: {fileID: 1463947978794579997}
   sprites:
   - {fileID: 21300000, guid: 2f3826ea26dbfa1419b62db45aaeb8ad, type: 3}
   - {fileID: 21300000, guid: 05bbd7806d6654842adb1e3f3eb9c5ea, type: 3}
+  spriteIndex: 0
+  sortingOrder: 0
   sortingGroup: {fileID: 2819596168009470499}
 --- !u!210 &2819596168009470499
 SortingGroup:

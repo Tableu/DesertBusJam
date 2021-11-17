@@ -10,6 +10,8 @@ public class MinigameManager : MinigameManagerBehavior
     public int playerPrefabIndex;
     public List<Vector3> startPos;
     public List<PlayerBehavior> players;
+    public List<TugOfWarCharacter> characters;
+    public Sprite[] hands;
 
     public static MinigameManager Instance
     {

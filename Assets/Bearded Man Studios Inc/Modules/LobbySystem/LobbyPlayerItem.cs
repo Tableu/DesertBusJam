@@ -7,10 +7,9 @@ namespace BeardedManStudios.Forge.Networking.Unity.Lobby
 	public class LobbyPlayerItem : MonoBehaviour
 	{
 		public Color[] TeamColors;
-		public Color[] AvatarColors;
+		public Sprite[] Characters;
 		public GameObject KickButton;
 		public Image AvatarBG;
-		public Text AvatarID;
 		public InputField PlayerName;
 		public Text PlayerTeamID;
 
@@ -65,7 +64,7 @@ namespace BeardedManStudios.Forge.Networking.Unity.Lobby
 		public void RequestChangeAvatarID()
 		{
 			int nextID = AssociatedPlayer.AvatarID + 1;
-			if (nextID >= AvatarColors.Length)
+			if (nextID >= Characters.Length)
 				nextID = 0;
 
 			_manager.ChangeAvatarID(this, nextID);
@@ -78,15 +77,12 @@ namespace BeardedManStudios.Forge.Networking.Unity.Lobby
 
 		public void ChangeAvatarID(int id)
 		{
-			Color avatarColor = Color.white;
-
 			//Note: This is just an example, you are free to make your own team colors and
 			// change this to however you see fit
 			if (TeamColors.Length > id && id >= 0)
-				avatarColor = AvatarColors[id];
-
-			AvatarID.text = id.ToString();
-			AvatarBG.color = avatarColor;
+			{
+				AvatarBG.sprite = Characters[id];
+			}
 		}
 
 		public void ChangeName(string name)
