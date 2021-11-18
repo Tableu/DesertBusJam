@@ -65,7 +65,7 @@ public class MapManager : MapBehavior
     {
         if (networkObject.IsServer)
         {
-            SceneManager.LoadScene("Scenes/TugOfWar");
+            SceneManager.LoadScene("Scenes/BarrelJoust");
         }
     }
 
