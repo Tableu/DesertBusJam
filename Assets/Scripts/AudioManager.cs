@@ -11,6 +11,12 @@ public class AudioManager : MonoBehaviour
         uiClick,
         uiHover,
         uiBack,
+        crowdCheer01,
+        crowdCheer02,
+        crowdCheer03,
+        joustHit,
+        joustBlock,
+        victory,
     }
 
     //Clears any nonexistant audio sources

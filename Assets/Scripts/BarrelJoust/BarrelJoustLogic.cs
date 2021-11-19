@@ -36,9 +36,13 @@ public class BarrelJoustLogic : MonoBehaviour
             {
                 healthCounters[maxHealth-health].SetActive(false);
                 health--;
+                AudioManager.PlaySound(AudioManager.Sound.joustHit);
                 if (health == 0)
                 {
                     enemy.SetActive(false);
+                    AudioManager.PlaySound(AudioManager.Sound.joustHit);
+                    AudioManager.PlaySound(AudioManager.Sound.crowdCheer01);
+                    AudioManager.PlaySound(AudioManager.Sound.victory);
                     enemyIndex++;
                     if (enemyIndex >= MinigameManager.Instance.players.Count)
                     {

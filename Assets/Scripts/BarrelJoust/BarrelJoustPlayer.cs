@@ -57,6 +57,7 @@ public class BarrelJoustPlayer : PlayerBehavior
         {
             spriteIndex = BLOCK;
             _cooldown = 0;
+            AudioManager.PlaySound(AudioManager.Sound.joustBlock);
         }else if (Input.GetKey("x"))
         {
             spriteIndex = HIT;
@@ -73,6 +74,7 @@ public class BarrelJoustPlayer : PlayerBehavior
 
     public void TakeDamage()
     {
+        AudioManager.PlaySound(AudioManager.Sound.joustHit);
         healthCounters[maxHealth - health].SetActive(false);
         health--;
         spriteIndex = DAMAGE;
