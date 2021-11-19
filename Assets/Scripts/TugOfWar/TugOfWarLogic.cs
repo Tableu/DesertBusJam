@@ -28,6 +28,14 @@ public class TugOfWarLogic : RopeBehavior
         _keyTimer = 0;
         startTime = Time.deltaTime;
         SetDifficulty();
+        if (MapManager.Instance.TugOfWarDifficulty > 1)
+        {
+            MusicManager.Instance.PlayMusic("minigame2");
+        }
+        else
+        {
+            MusicManager.Instance.PlayMusic("minigame1");
+        }
     }
 
     // Update is called once per frame

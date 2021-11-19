@@ -29,6 +29,7 @@ public class BarrelJoustPlayer : PlayerBehavior
     public const int HIT = 2;
     public const int DAMAGE = 3;
     public const int IDLE = 4;
+    public bool attacked;
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +70,8 @@ public class BarrelJoustPlayer : PlayerBehavior
                 spriteIndex = HIT;
                 _action = 0;
                 _cooldown = 0;
+                BarrelJoustLogic.Instance.TakeDamage();
+                AudioManager.PlaySound(AudioManager.Sound.joustHit);
             }
             else
             {

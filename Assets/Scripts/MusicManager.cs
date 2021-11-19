@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour
 {
+    private static MusicManager _instance;
     //Music source and tracks
     public List<MusicTrack> musicClips;
     public AudioSource musicSrc;
@@ -20,10 +21,22 @@ public class MusicManager : MonoBehaviour
         minigame2,
         credits,
     }
+
+    public static MusicManager Instance
+    {
+        get { return _instance; }
+    }
     // Don't destroy gameobject
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+        if (Instance)
+        {
+            Destroy(gameObject);
+            Destroy(this);
+            return;
+        }
+        _instance = this;
     }
 
     //Plays first index track since technically

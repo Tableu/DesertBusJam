@@ -39,6 +39,7 @@ public class MapManager : MapBehavior
         DontDestroyOnLoad(van);
         SceneManager.sceneLoaded += DisableCanvas;
         points = 0;
+        MusicManager.Instance.PlayMusic("gas_station");
     }
     
     // Update is called once per frame
@@ -71,7 +72,7 @@ public class MapManager : MapBehavior
             {
                 _tugOfWarDifficulty++;
             }
-
+            MusicManager.Instance.PlayMusic("gas_station");
             _posIndex++;
         }
     }

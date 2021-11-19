@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -39,7 +38,7 @@ public class AudioManager : MonoBehaviour
     {
         foreach (AudioSource auSource in sources)
         {
-            if (!auSource.isPlaying)
+            if (auSource != null && !auSource.isPlaying)
             {
                 return auSource;
             }
