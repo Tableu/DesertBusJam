@@ -8,11 +8,15 @@ public class MapManager : MapBehavior
     private static MapManager _instance;
     [SerializeField] private int points;
     [SerializeField] private Text moneyText;
-    [SerializeField] private Slider slider;
+    [SerializeField] private GameObject van;
+    [SerializeField] private Vector3[] vanPositions;
     [SerializeField] private GameObject canvas;
-    private int _difficulty = 0;
+    private int _tugOfWarDifficulty = 0;
+    private int _barrelJoustDifficulty = 0;
+    private int _posIndex = 0;
     public int Points => points;
-    public int Difficulty => _difficulty;
+    public int TugOfWarDifficulty => _tugOfWarDifficulty;
+    public int BarrelJoustDifficulty => _barrelJoustDifficulty;
     public static MapManager Instance
     {
         get { return _instance; }
@@ -31,6 +35,8 @@ public class MapManager : MapBehavior
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(canvas);
+        DontDestroyOnLoad(van);
         SceneManager.sceneLoaded += DisableCanvas;
         points = 0;
     }
@@ -43,29 +49,55 @@ public class MapManager : MapBehavior
         if (!networkObject.IsOwner)
         {
             points = networkObject.score;
-            slider.value = points;
+            van.transform.position = networkObject.position;
             moneyText.text = points.ToString();
             return;
         }
         networkObject.score = points;
+        networkObject.position = van.transform.position;
+    }
+
+    public void MinigameEnd()
+    {
+        van.SetActive(true);
+        if (_posIndex < vanPositions.Length)
+        {
+            van.transform.position = vanPositions[_posIndex];
+            if (_posIndex % 2 == 1)
+            {
+                _barrelJoustDifficulty++;
+            }
+            else
+            {
+                _tugOfWarDifficulty++;
+            }
+
+            _posIndex++;
+        }
     }
 
     public void AddPoints(int score)
     {
-        points += score;
-        slider.value = points;
-        moneyText.text = points.ToString();
-        if (points > 200)
+        if (score > 0)
         {
-            _difficulty = 1;
+            points += score;
+            moneyText.text = points.ToString();
         }
     }
 
     public void LoadMinigame()
     {
+        van.SetActive(false);
         if (networkObject.IsServer)
         {
-            SceneManager.LoadScene("Scenes/BarrelJoust");
+            if (_posIndex % 2 == 1)
+            {
+                SceneManager.LoadScene("Scenes/BarrelJoust");
+            }
+            else
+            {
+                SceneManager.LoadScene("Scenes/TugOfWar");
+            }
         }
     }
 

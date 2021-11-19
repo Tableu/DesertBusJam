@@ -46,9 +46,9 @@ public class MinigameManager : MinigameManagerBehavior
         _instance = null;
     }
 
-    public void Win(int points)
+    public void Win()
     {
-        MapManager.Instance.AddPoints(points);
+        MapManager.Instance.MinigameEnd();
         if (networkObject.IsServer)
         {
             SceneManager.LoadScene("Scenes/MapScene", LoadSceneMode.Single);

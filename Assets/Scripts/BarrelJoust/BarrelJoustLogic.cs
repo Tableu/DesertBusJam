@@ -16,12 +16,14 @@ public class BarrelJoustLogic : MonoBehaviour
     public GameObject[] healthCounters;
     public float attackTimer;
     public float attackTimerLength;
+    public float startTime;
     // Start is called before the first frame update
     void Start()
     {
         enemy = BarrelJoustEnemyManager.Instance.enemies[0];
         enemyRenderer = enemy.GetComponent<SpriteRenderer>();
         attackTimer = 0;
+        startTime = Time.deltaTime;
     }
 
     // Update is called once per frame
@@ -32,10 +34,13 @@ public class BarrelJoustLogic : MonoBehaviour
             
         }else if (Input.GetKeyDown("x"))
         {
-            if (spriteIndex != BarrelJoustPlayer.BLOCK)
+            if (spriteIndex != BarrelJoustPlayer.BLOCK && player.spriteIndex == BarrelJoustPlayer.HIT && attackTimer > attackTimerLength*0.75)
             {
                 healthCounters[maxHealth-health].SetActive(false);
                 health--;
+                spriteIndex = BarrelJoustPlayer.DAMAGE;
+                enemyRenderer.sprite = sprites[spriteIndex];
+                attackTimer = 0;
                 if (health == 0)
                 {
                     enemy.SetActive(false);
@@ -43,6 +48,8 @@ public class BarrelJoustLogic : MonoBehaviour
                     if (enemyIndex >= MinigameManager.Instance.players.Count)
                     {
                         gameObject.SetActive(false);
+                        MapManager.Instance.AddPoints(1000-(int)(Time.deltaTime-startTime)*50);
+                        MinigameManager.Instance.Win();
                         return;
                     }
 

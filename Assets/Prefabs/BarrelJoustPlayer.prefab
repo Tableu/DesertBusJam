@@ -368,4 +368,5 @@ MonoBehaviour:
   - {fileID: 7808742752765487437}
   - {fileID: 7808742752056549715}
   - {fileID: 7808742752204441224}
-  cooldownLength: 0.65
+  cooldownLength: 0.7
+  actionDuration: 0.35

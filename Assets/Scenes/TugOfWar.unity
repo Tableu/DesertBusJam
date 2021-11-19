@@ -358,15 +358,15 @@ MonoBehaviour:
   scoreGoal: 10
   rope: {fileID: 804376770}
   difficultyLevels:
-  - timerLength: 2
+  - timerLength: 3
     keyTimerLength: 1000
     scoreGoal: 10
   - timerLength: 2
     keyTimerLength: 6
-    scoreGoal: 15
-  - timerLength: 1.5
-    keyTimerLength: 3
-    scoreGoal: 15
+    scoreGoal: 12
+  - timerLength: 2
+    keyTimerLength: 4
+    scoreGoal: 12
   mashKeysText:
   - {fileID: 160602926}
   - {fileID: 575628408}

@@ -22,6 +22,8 @@ public class BarrelJoustPlayer : PlayerBehavior
     public GameObject[] healthCounters;
     public float cooldownLength;
     private float _cooldown;
+    public float actionDuration;
+    private float _action;
     public const int READY = 0;
     public const int BLOCK = 1;
     public const int HIT = 2;
@@ -47,25 +49,36 @@ public class BarrelJoustPlayer : PlayerBehavior
             characterRenderer.sprite = sprites[spriteIndex];
             return;
         }
-        if (_cooldown < cooldownLength)
+        if (_action < actionDuration)
         {
-            _cooldown += Time.deltaTime;
+            _action += Time.deltaTime;
             return;
         }
-            
-        if (Input.GetKey("z"))
+        
+        if (_cooldown > cooldownLength)
         {
-            spriteIndex = BLOCK;
-            _cooldown = 0;
-        }else if (Input.GetKey("x"))
-        {
-            spriteIndex = HIT;
-            _cooldown = 0;
+            if (Input.GetKey("z"))
+            {
+                spriteIndex = BLOCK;
+                _action = 0;
+                _cooldown = 0;
+            }
+            else if (Input.GetKey("x"))
+            {
+                spriteIndex = HIT;
+                _action = 0;
+                _cooldown = 0;
+            }
+            else
+            {
+                spriteIndex = READY;
+            }
         }
         else
         {
-            spriteIndex = READY;
+            _cooldown += Time.deltaTime;
         }
+        
         networkObject.spriteIndex = spriteIndex;
         networkObject.score = health;
         characterRenderer.sprite = sprites[spriteIndex];

@@ -19,12 +19,14 @@ public class TugOfWarLogic : RopeBehavior
     public TugOfWarDifficulty[] difficultyLevels;
     private float _timer;
     private float _keyTimer;
+    private float startTime;
     public Text[] mashKeysText;
     // Start is called before the first frame update
     void Start()
     {
         _timer = 0;
         _keyTimer = 0;
+        startTime = Time.deltaTime;
         SetDifficulty();
     }
 
@@ -65,6 +67,7 @@ public class TugOfWarLogic : RopeBehavior
             {
                 var pos = rope.transform.position;
                 rope.transform.position = pos + new Vector3(-1, 0, 0);
+                MapManager.Instance.AddPoints(totalScore);
             }else if (totalScore <= scoreGoal*MinigameManager.Instance.players.Count)
             {
                 var pos = rope.transform.position;
@@ -77,7 +80,8 @@ public class TugOfWarLogic : RopeBehavior
                 Time.timeScale = 0;
             }else if (rope.transform.position.x < -5)
             {
-                MinigameManager.Instance.Win(400);
+                MinigameManager.Instance.Win();
+                MapManager.Instance.AddPoints(1000-(int)(Time.deltaTime-startTime)*50);
                 Time.timeScale = 0;
             }
         }
@@ -86,9 +90,9 @@ public class TugOfWarLogic : RopeBehavior
 
     private void SetDifficulty()
     {
-        if (MapManager.Instance.Difficulty < difficultyLevels.Length)
+        if (MapManager.Instance.TugOfWarDifficulty < difficultyLevels.Length)
         {
-            TugOfWarDifficulty settings = difficultyLevels[MapManager.Instance.Difficulty];
+            TugOfWarDifficulty settings = difficultyLevels[MapManager.Instance.TugOfWarDifficulty];
             timerLength = settings.timerLength;
             keyTimerLength = settings.keyTimerLength;
             scoreGoal = settings.scoreGoal;
