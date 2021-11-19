@@ -11,6 +11,13 @@ public class AudioManager : MonoBehaviour
         uiClick,
         uiHover,
         uiBack,
+        crowdCheer01,
+        crowdCheer02,
+        crowdCheer03,
+        joustHit,
+        joustBlock,
+        victory,
+        tug,
     }
 
     //Clears any nonexistant audio sources
@@ -70,11 +77,54 @@ public class AudioManager : MonoBehaviour
         }
         return null;
     }
+    private static Dictionary<Sound, float> soundTimerDictionary;
+
+    //Function to call the SoundTimer
+    public static void InitializeSoundTimer()
+    {
+        soundTimerDictionary = new Dictionary<Sound, float>();
+        soundTimerDictionary[Sound.tug] = 0f;
+    }
+
+    //Sets timer for the tug sfx is played
+    private static bool SoundTimer(Sound sound)
+    {
+        switch (sound)
+        {
+            default:
+                return true;
+            case Sound.tug:
+                if (soundTimerDictionary.ContainsKey(sound))
+                {
+                    float lastTimePlayed = soundTimerDictionary[sound];
+                    float playerInputMax = 0.5f;
+                    if (lastTimePlayed + playerInputMax < Time.time)
+                    {
+                        soundTimerDictionary[sound] = Time.time;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                    //break;
+                }
+                else
+                {
+                    return true;
+                }
+        }
+    }
+
 
     //Play sound
     public static void PlaySound(Sound sound)
     {
-        GetAvailableAudioSource().PlayOneShot(GetAudioClip(sound));
+        if (SoundTimer(sound))
+        {
+            GetAvailableAudioSource().PlayOneShot(GetAudioClip(sound));
+        }
     }
 
     //Toggle sfx
