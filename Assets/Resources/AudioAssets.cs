@@ -24,6 +24,7 @@ public class AudioAssets : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        AudioManager.InitializeSoundTimer();
         _Assetsinstance = this;
         DontDestroyOnLoad(this);
     }
