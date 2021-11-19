@@ -24,6 +24,11 @@ public class TugOfWarPlayer : PlayerBehavior
     private int _playerCharacter;
     public const int NORMAL = 0;
     public const int STRUGGLE = 1;
+
+    private void Awake()
+    {
+        AudioManager.InitializeSoundTimer();
+    }
     void Start()
     {
         MinigameManager.Instance.players.Add(this);
@@ -58,6 +63,7 @@ public class TugOfWarPlayer : PlayerBehavior
         }
         if (Input.GetKeyUp(_mashKeys[0]) || Input.GetKeyUp(_mashKeys[1]))
         {
+            AudioManager.PlaySound(AudioManager.Sound.tug);
             score++;
         }
 
