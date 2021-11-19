@@ -41,8 +41,8 @@ public class TugOfWarPlayer : PlayerBehavior
             networkObject.playerCharacter = LobbyService.Instance.MyMockPlayer.AvatarID;
         }
         _playerCharacter = networkObject.playerCharacter;
-        sprites[NORMAL] = MinigameManager.Instance.characters[_playerCharacter].Normal;
-        sprites[STRUGGLE] = MinigameManager.Instance.characters[_playerCharacter].Struggle;
+        sprites[NORMAL] = MinigameManager.Instance.tugOfWarCharacters[_playerCharacter].Normal;
+        sprites[STRUGGLE] = MinigameManager.Instance.tugOfWarCharacters[_playerCharacter].Struggle;
         handRenderer.sprite = MinigameManager.Instance.hands[_playerCharacter];
     }
 
@@ -56,8 +56,8 @@ public class TugOfWarPlayer : PlayerBehavior
             score = networkObject.score;
             spriteRenderer.sprite = sprites[networkObject.spriteIndex];
             sortingGroup.sortingOrder = networkObject.sortingOrder;
-            sprites[NORMAL] = MinigameManager.Instance.characters[networkObject.playerCharacter].Normal;
-            sprites[STRUGGLE] = MinigameManager.Instance.characters[networkObject.playerCharacter].Struggle;
+            sprites[NORMAL] = MinigameManager.Instance.tugOfWarCharacters[networkObject.playerCharacter].Normal;
+            sprites[STRUGGLE] = MinigameManager.Instance.tugOfWarCharacters[networkObject.playerCharacter].Struggle;
             handRenderer.sprite = MinigameManager.Instance.hands[networkObject.playerCharacter];
             return;
         }

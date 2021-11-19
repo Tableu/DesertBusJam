@@ -40,6 +40,7 @@ public class MapManager : MapBehavior
         SceneManager.sceneLoaded += DisableCanvas;
         points = 0;
         MusicManager.Instance.PlayMusic("gas_station");
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
     
     // Update is called once per frame
@@ -58,7 +59,7 @@ public class MapManager : MapBehavior
         networkObject.position = van.transform.position;
     }
 
-    public void MinigameEnd()
+    public void MinigameWin()
     {
         van.SetActive(true);
         if (_posIndex < vanPositions.Length)
@@ -72,9 +73,16 @@ public class MapManager : MapBehavior
             {
                 _tugOfWarDifficulty++;
             }
-            MusicManager.Instance.PlayMusic("gas_station");
             _posIndex++;
         }
+        
+        MusicManager.Instance.PlayMusic("gas_station");
+    }
+
+    public void MinigameLose()
+    {
+        van.SetActive(true);
+        MusicManager.Instance.PlayMusic("gas_station");
     }
 
     public void AddPoints(int score)
@@ -111,6 +119,18 @@ public class MapManager : MapBehavior
         else
         {
             canvas.SetActive(false);
+        }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (_posIndex >= vanPositions.Length)
+        {
+            SceneManager.LoadScene("Scenes/VictoryScreen");
+            _posIndex = 0;
+            van.transform.position = vanPositions[_posIndex];
+            van.SetActive(false);
+            MusicManager.Instance.PlayMusic("victory_db");
         }
     }
 }

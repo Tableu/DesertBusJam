@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using BeardedManStudios.Forge.Networking.Generated;
+using BeardedManStudios.Forge.Networking.Lobby;
 using UnityEngine;
 [System.Serializable]
 public struct BarrelJoustPlayerSprites
@@ -24,6 +25,7 @@ public class BarrelJoustPlayer : PlayerBehavior
     private float _cooldown;
     public float actionDuration;
     private float _action;
+    private int _playerCharacter;
     public const int READY = 0;
     public const int BLOCK = 1;
     public const int HIT = 2;
@@ -36,6 +38,17 @@ public class BarrelJoustPlayer : PlayerBehavior
         _cooldown = cooldownLength;
         MinigameManager.Instance.players.Add(this);
         BarrelJoustEnemyManager.Instance.SpawnEnemy();
+        if (networkObject.IsOwner)
+        {
+            networkObject.playerCharacter = LobbyService.Instance.MyMockPlayer.AvatarID;
+        }
+        _playerCharacter = networkObject.playerCharacter;
+        sprites[READY] = MinigameManager.Instance.barrelJoustPlayerSprites[_playerCharacter].Ready;
+        sprites[BLOCK] = MinigameManager.Instance.barrelJoustPlayerSprites[_playerCharacter].Block;
+        sprites[HIT] = MinigameManager.Instance.barrelJoustPlayerSprites[_playerCharacter].Hit;
+        sprites[DAMAGE] = MinigameManager.Instance.barrelJoustPlayerSprites[_playerCharacter].Damage;
+        sprites[IDLE] = MinigameManager.Instance.barrelJoustPlayerSprites[_playerCharacter].Idle;
+        characterRenderer.sprite = sprites[READY];
     }
 
     // Update is called once per frame

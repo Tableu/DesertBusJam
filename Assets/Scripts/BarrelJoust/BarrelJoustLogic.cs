@@ -54,7 +54,7 @@ public class BarrelJoustLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(player == null)
+        if(player == null && playerIndex < MinigameManager.Instance.players.Count)
             player = MinigameManager.Instance.players[playerIndex].gameObject.GetComponent<BarrelJoustPlayer>();
         attackTimer += Time.deltaTime;
         if (attackTimer < attackTimerLength)
@@ -79,6 +79,7 @@ public class BarrelJoustLogic : MonoBehaviour
                 if (playerIndex >= MinigameManager.Instance.players.Count)
                 {
                     gameObject.SetActive(false);
+                    MinigameManager.Instance.Lose();
                     return;
                 }
 

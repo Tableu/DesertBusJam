@@ -253,5 +253,8 @@ MonoBehaviour:
   - loop: 1
     audioClip: {fileID: 8300000, guid: f8353897671a02c46a1e0ce5f0e56354, type: 3}
     track: 4
+  - loop: 0
+    audioClip: {fileID: 8300000, guid: 71129df24741e214b8b19f6878a762bb, type: 3}
+    track: 5
   musicSrc: {fileID: 3481545929728794106}
   motiveSrc: {fileID: 1193172075901741953}

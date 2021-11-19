@@ -20,6 +20,7 @@ public class MusicManager : MonoBehaviour
         minigame1,
         minigame2,
         credits,
+        victory_db,
     }
 
     public static MusicManager Instance

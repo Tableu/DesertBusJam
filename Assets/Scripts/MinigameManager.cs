@@ -10,7 +10,8 @@ public class MinigameManager : MinigameManagerBehavior
     public int playerPrefabIndex;
     public List<Vector3> startPos;
     public List<PlayerBehavior> players;
-    public List<TugOfWarCharacter> characters;
+    public List<TugOfWarCharacter> tugOfWarCharacters;
+    public List<BarrelJoustPlayerSprites> barrelJoustPlayerSprites;
     public Sprite[] hands;
 
     public static MinigameManager Instance
@@ -48,7 +49,7 @@ public class MinigameManager : MinigameManagerBehavior
 
     public void Win()
     {
-        MapManager.Instance.MinigameEnd();
+        MapManager.Instance.MinigameWin();
         if (networkObject.IsServer)
         {
             SceneManager.LoadScene("Scenes/MapScene", LoadSceneMode.Single);
@@ -57,6 +58,7 @@ public class MinigameManager : MinigameManagerBehavior
 
     public void Lose()
     {
+        MapManager.Instance.MinigameLose();
         if (networkObject.IsServer)
         {
             SceneManager.LoadScene("Scenes/MapScene", LoadSceneMode.Single);
